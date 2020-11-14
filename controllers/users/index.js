@@ -38,6 +38,18 @@ const register = async (input) => {
         }
 }
 
+//Obtener Usuario
+const getUser = async (id, username) => {
+    let user = null;
+
+    if (id) user = await User.findById(id);
+    if (username) user = await User.findOne({ username });
+
+    if (!user) throw new Error('El usuario no existe');
+
+    return user;
+}
+
 const login = async ({ email, password }) => {
     
     //Revisamos que el username no este dado de alta
@@ -70,5 +82,6 @@ const createToken = async (user, SECRET_KEY, expiresIn) => {
 
 module.exports = {
     register,
-    login
+    login,
+    getUser
 }

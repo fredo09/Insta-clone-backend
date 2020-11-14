@@ -1,15 +1,12 @@
 /**
 *   Resolvers en Graphql 
 **/
-const { register, login } = require('./../../controllers/users');
+const { register, login, getUser } = require('./../../controllers/users');
 
 const resolvers = {
     Query: {
         // User
-        getUser: () => {
-            console.log('Obteniendo el Usuario');
-            return null;
-        }
+        getUser: (_, { id, username }) => getUser(id, username),
     },
     Mutation: {
         // User
