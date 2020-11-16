@@ -13,7 +13,7 @@ const register = async (input) => {
         newUser.email = newUser.email.toLowerCase();
         newUser.username = newUser.username.toLowerCase();
 
-        const { name, username, email, password } = newUser;
+        const { username, email, password } = newUser;
             
         //Revisamos que el email no este dado de alta
         const foundEmail = await User.findOne({ email });
@@ -50,6 +50,12 @@ const getUser = async (id, username) => {
     return user;
 }
 
+//Subiendo Files
+const updateAvatar = async (file) => {
+    console.log(file)
+    return null;
+}
+
 const login = async ({ email, password }) => {
     
     //Revisamos que el username no este dado de alta
@@ -83,5 +89,6 @@ const createToken = async (user, SECRET_KEY, expiresIn) => {
 module.exports = {
     register,
     login,
-    getUser
+    getUser,
+    updateAvatar
 }

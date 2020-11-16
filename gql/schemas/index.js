@@ -23,6 +23,11 @@ const typeDefs = gql`
         token : String
     }
 
+    type uploadAvatar {
+        status: Boolean
+        urlAvatar: String
+    }
+
     #Input crear usuario, datos a resivir de la petición
     input UserInput {
         name: String!
@@ -46,6 +51,7 @@ const typeDefs = gql`
         # User
         register( input: UserInput ) : User
         login( input: LoginInput ) : Token
+        uploadAvatar(file: Upload) : uploadAvatar
     }
 `;
 
