@@ -5,6 +5,7 @@
 const User = require('./../../models/users');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { awsUploadImages } = require('./../../utils/aws-upload-images');
 
 //Registrar Usuario
 const register = async (input) => {
@@ -51,9 +52,21 @@ const getUser = async (id, username) => {
 }
 
 //Subiendo Files
-const updateAvatar = async (file) => {
-    console.log(file)
-    return null;
+async function updateAvatar(file) {
+  const { createReadStream, mimetype } = await file;
+  const extension = mimetype.split("/")[1];
+  const imageName = `avatar/avt.${extension}`;
+  const fileData = createReadStream();
+
+  try {
+    const result = await awsUploadImages(fileData, imageName);
+    console.log(result);
+  } catch (error) {
+    return {
+      status: false,
+      urlAvatar: null,
+    };
+  }
 }
 
 const login = async ({ email, password }) => {
