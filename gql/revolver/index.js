@@ -1,7 +1,7 @@
 /**
 *   Resolvers en Graphql 
 **/
-const { register, login, getUser, updateAvatar } = require('./../../controllers/users');
+const { register, login, getUser, updateAvatar, deleteAvatar } = require('./../../controllers/users');
 
 const resolvers = {
     Query: {
@@ -12,7 +12,8 @@ const resolvers = {
         // User
         register: (_, { input } ) => register(input),
         login: (_, { input } ) => login(input),
-        uploadAvatar: (_, { file } ) => updateAvatar(file)
+        uploadAvatar: (_, { file }, ctx ) => updateAvatar(file, ctx),
+        deleteAvatar: (_, {}, ctx) => deleteAvatar(ctx)
     }
 }
 

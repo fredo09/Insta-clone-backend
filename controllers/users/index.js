@@ -52,15 +52,23 @@ const getUser = async (id, username) => {
 }
 
 //Subiendo Files
-async function updateAvatar(file) {
+async function updateAvatar(file, ctx) {
+  const { id, username } = ctx.user;
   const { createReadStream, mimetype } = await file;
   const extension = mimetype.split("/")[1];
-  const imageName = `avatar/avt.${extension}`;
+  const imageName = `avatar/${username}_${id}_${Date.now()}.${extension}`;
   const fileData = createReadStream();
 
   try {
     const result = await awsUploadImages(fileData, imageName);
-    console.log(result);
+    
+    await User.findByIdAndUpdate(id, { avatar: result });
+    
+    return {
+        status: true,
+        urlAvatar: result
+    }
+
   } catch (error) {
     return {
       status: false,
@@ -99,9 +107,26 @@ const createToken = async (user, SECRET_KEY, expiresIn) => {
     return  jwt.sign(payload, SECRET_KEY, expiresIn);
 }
 
+//Eliminar Imagen Avatar
+const deleteAvatar = async (ctx) => {
+    const { id } = ctx.user;
+    try {
+    
+        await User.findByIdAndUpdate(id, { avatar: '' });
+        return true;
+
+    }catch(error){
+        
+        console.log(error);
+        return false;
+        
+    }
+} 
+
 module.exports = {
     register,
     login,
     getUser,
-    updateAvatar
+    updateAvatar,
+    deleteAvatar
 }

@@ -52,6 +52,7 @@ const typeDefs = gql`
         register( input: UserInput ) : User
         login( input: LoginInput ) : Token
         uploadAvatar(file: Upload) : uploadAvatar
+        deleteAvatar: Boolean
     }
 `;
 
