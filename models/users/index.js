@@ -26,7 +26,7 @@ const UserSchema = new Schema({
         type: String,
         trim: true
     },
-    siteWeb: {
+    sitioWeb: {
         type: String,
         trim: true
     },

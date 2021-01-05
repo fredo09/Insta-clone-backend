@@ -13,7 +13,7 @@ const typeDefs = gql`
         username: String
         email: String
         avatar: String
-        siteWeb: String
+        sitioWeb: String
         description: String
         password: String
         createAt: String
@@ -36,6 +36,16 @@ const typeDefs = gql`
         password: String!
     }
 
+    # Actualiza informacion del usuario
+    input UpdateUserInput{
+        name: String
+        email: String
+        currentPassword: String
+        newPassword: String
+        sitioWeb: String
+        description: String
+    }
+
     #Input para login de la aplicacion
     input LoginInput {
         email: String!
@@ -53,6 +63,7 @@ const typeDefs = gql`
         login( input: LoginInput ) : Token
         uploadAvatar(file: Upload) : uploadAvatar
         deleteAvatar: Boolean
+        updateUser( input: UpdateUserInput ): Boolean
     }
 `;
 
