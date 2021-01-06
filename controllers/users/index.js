@@ -156,11 +156,21 @@ const updateUser = async (input, ctx) => {
     }
 }
 
+// Buscar usuarios
+const searchUser =  async (search) => {
+    const users = await User.find({
+        name: { $regex: search , $options: "i" }
+    });
+
+    return users;
+}
+
 module.exports = {
     register,
     login,
     getUser,
     updateAvatar,
     deleteAvatar,
-    updateUser
+    updateUser,
+    searchUser
 }

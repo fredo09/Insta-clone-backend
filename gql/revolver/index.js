@@ -1,12 +1,13 @@
 /**
 *   Resolvers en Graphql 
 **/
-const { register, login, getUser, updateAvatar, deleteAvatar, updateUser } = require('./../../controllers/users');
+const { register, login, getUser, updateAvatar, deleteAvatar, updateUser, searchUser } = require('./../../controllers/users');
 
 const resolvers = {
     Query: {
         // User
         getUser: (_, { id, username }) => getUser(id, username),
+        search: (_, { search }) => searchUser(search),
     },
     Mutation: {
         // User
