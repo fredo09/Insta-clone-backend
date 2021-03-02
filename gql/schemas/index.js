@@ -28,6 +28,12 @@ const typeDefs = gql`
         urlAvatar: String
     }
 
+    # Publish para publicar fotos
+    type Publish {
+        status: Boolean
+        urlFile: String
+    }
+
     #Input crear usuario, datos a resivir de la petición
     input UserInput {
         name: String!
@@ -74,6 +80,9 @@ const typeDefs = gql`
         # Follow
         follow(username: String!): Boolean
         unFollow(username: String!) : Boolean
+
+        # Publication
+        publish(file : Upload): Publish
     }
 `;
 
