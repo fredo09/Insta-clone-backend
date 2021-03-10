@@ -2,6 +2,7 @@
 *   Controllers Publications 
 **/
 const Publication = require('./../../models/publication');
+const User = require('./../../models/users');
 const { awsUploadImages } = require('./../../utils/aws-upload-images');
 const { v4: uuidv4 } = require('uuid');
 
@@ -40,6 +41,17 @@ const publish = async (file, { user }) => {
     }
 }
 
+const publications = async (username) => {
+    
+    const user = await User.findOne({ username });
+    if (!user) throw new Error ('Usuario no existe.');
+    const publications = await Publication.find().where({ idUser: user._id }).sort({ createAt: -1 });
+
+    if (!publications) throw new Error('No contiene Publicaciones');
+    return publications;
+}
+
 module.exports = {
-    publish
+    publish,
+    publications
 }

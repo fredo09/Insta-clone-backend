@@ -34,6 +34,15 @@ const typeDefs = gql`
         urlFile: String
     }
 
+    #Publication para ver publicaciones por usuario
+    type Publication {
+        id: ID
+        idUser: ID
+        file: String
+        typeFile: String
+        createAt: String
+    }
+
     #Input crear usuario, datos a resivir de la petición
     input UserInput {
         name: String!
@@ -67,6 +76,9 @@ const typeDefs = gql`
         isFollow(username: String!) : Boolean
         getFollowers(username: String!): [User]
         getFolloweds(username: String!): [User]
+
+        #Publication
+        getPublications(username: String!):[Publication]
     }
 
     type Mutation {

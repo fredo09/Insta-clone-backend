@@ -3,7 +3,7 @@
 **/
 const { register, login, getUser, updateAvatar, deleteAvatar, updateUser, searchUser } = require('./../../controllers/users');
 const { follow, isFollow, unFollow, getFollowers, getFolloweds } = require('./../../controllers/follows');
-const { publish } = require('./../../controllers/publication');
+const { publish, publications } = require('./../../controllers/publication');
 
 const resolvers = {
     Query: {
@@ -15,6 +15,9 @@ const resolvers = {
         isFollow: (_, { username }, ctx) => isFollow(username, ctx),
         getFollowers: (_, { username }) => getFollowers(username),
         getFolloweds: (_, { username }) => getFolloweds(username), 
+
+        //Publication
+        getPublications: (_, { username }) => publications(username),
     },
     Mutation: {
         // User
