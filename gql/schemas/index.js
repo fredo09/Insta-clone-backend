@@ -43,6 +43,14 @@ const typeDefs = gql`
         createAt: String
     }
 
+    #Comentario de una publicación
+    type Comment {
+        idPublication: ID
+        idUser: User
+        comment: String
+        createAt: String
+    }
+
     #Input crear usuario, datos a resivir de la petición
     input UserInput {
         name: String!
@@ -67,6 +75,12 @@ const typeDefs = gql`
         password: String!
     }
 
+    #Input para agregar comentario a una publicacion
+    input CommentInput {
+        idPublication: ID
+        comment: String
+    }
+
     type Query {
         # User
         getUser(id: ID, username: String): User
@@ -79,6 +93,9 @@ const typeDefs = gql`
 
         #Publication
         getPublications(username: String!):[Publication]
+
+        #Comments
+        getComments(idPublication: ID!) : [Comment]
     }
 
     type Mutation {
@@ -95,6 +112,9 @@ const typeDefs = gql`
 
         # Publication
         publish(file : Upload): Publish
+
+        #Comments
+        addComment(input : CommentInput): Comment
     }
 `;
 
