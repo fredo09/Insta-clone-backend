@@ -5,8 +5,6 @@
 const Comment = require('../../models/coments');
 
 const addComent = ({ idPublication, comment }, { user }) => {
-    console.log("Ejcutamos el servicio para agregar comentarios")
-    console.log(comment);
     try {
         const commentNew = new Comment({
             idPublication,

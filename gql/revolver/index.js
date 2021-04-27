@@ -5,6 +5,7 @@ const { register, login, getUser, updateAvatar, deleteAvatar, updateUser, search
 const { follow, isFollow, unFollow, getFollowers, getFolloweds } = require('./../../controllers/follows');
 const { publish, publications } = require('./../../controllers/publication');
 const { addComent, getPublications } = require('./../../controllers/Comment');
+const { addLikes, deleteLikes, isLikes, countLikes } = require('./../../controllers/Like');
 
 const resolvers = {
     Query: {
@@ -22,6 +23,10 @@ const resolvers = {
 
         //Comments
         getComments: (_, { idPublication }) => getPublications(idPublication),
+
+        //likes
+        isLike: (_, { idPublication }, ctx) => isLikes(idPublication, ctx),
+        countLikes: (_, { idPublication }) => countLikes(idPublication), 
     },
     Mutation: {
         // User
@@ -39,7 +44,11 @@ const resolvers = {
         publish: (_, { file }, ctx) => publish(file, ctx),
 
         //Comment
-        addComment: (_, { input }, ctx ) => addComent(input, ctx),
+        addComment: (_, { input }, ctx) => addComent(input, ctx),
+        
+        //like
+        addLike: (_, { idPublication }, ctx) => addLikes(idPublication, ctx),
+        deleteLike: (_, { idPublication }, ctx) => deleteLikes(idPublication, ctx), 
     }
 }
 
