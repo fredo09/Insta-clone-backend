@@ -3,6 +3,7 @@
 **/
 const Publication = require('./../../models/publication');
 const User = require('./../../models/users');
+const Follow = require('./../../models/follow');
 const { awsUploadImages } = require('./../../utils/aws-upload-images');
 const { v4: uuidv4 } = require('uuid');
 
@@ -51,7 +52,50 @@ const publications = async (username) => {
     return publications;
 }
 
+//Obtener el Feed de publicaciones
+const FeedPublications = async ({ user }) => {
+
+    //Obtenemos todos lo usuarios que seguimos
+    const followeds = await Follow.find({ idUser: user.id }).populate("idUserFollow");
+    
+    //Array de usuarios que seguimos
+    const followedsList = [];
+
+    for await (const data of followeds) {
+        followedsList.push(data.idUserFollow);
+    }
+
+    //Sacamos las publicaciones de los usuario que seguimos
+    const publicationsList = [];
+
+    for await (const data of followedsList) {
+        const publications = await Publication.find().where({
+            idUser: data._id
+        }).sort({
+            createAt: -1
+        }).populate("idUser");
+        publicationsList.push(...publications);
+    }
+
+    //Sacando todas las publicaciones del usuario 
+    const userPublications = await Publication.find().where({
+        idUser: user.id
+    }).sort({
+        createAt: -1
+    }).populate("idUser");
+
+    const publicationsFeed = publicationsList.concat(userPublications);
+
+    //resultado final ordenamiento por fechas entre las publicaciones
+    const result = publicationsFeed.sort((a, b) => {
+        return new Date(b.createAt) - new Date(a.createAt);
+    });
+
+    return result;
+}
+
 module.exports = {
     publish,
-    publications
+    publications,
+    FeedPublications
 }

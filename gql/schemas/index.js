@@ -51,6 +51,15 @@ const typeDefs = gql`
         createAt: String
     }
 
+    #FeedPublicaciones
+    type FeedPublication {
+        id: ID
+        idUser: User
+        file: String
+        typeFile: String
+        createAt: String
+    }
+
     #Input crear usuario, datos a resivir de la petición
     input UserInput {
         name: String!
@@ -93,6 +102,7 @@ const typeDefs = gql`
 
         #Publication
         getPublications(username: String!):[Publication]
+        getPublicationsFeed: [FeedPublication]
 
         #Comments
         getComments(idPublication: ID!) : [Comment]
