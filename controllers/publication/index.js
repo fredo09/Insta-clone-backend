@@ -96,9 +96,7 @@ const FeedPublications = async ({ user }) => {
 
 //Obtenemos la publicacion de un usuario
 const publication = async (idPublication) => {
-    console.log(idPublication)
     const publication = await Publication.findById({ _id:idPublication }).populate("idUser");
-    console.log(publication);
     if (!publication) throw new Error('No hay publicacion');
     return publication;
 }

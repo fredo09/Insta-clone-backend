@@ -2,7 +2,7 @@
 *   Resolvers en Graphql 
 **/
 const { register, login, getUser, updateAvatar, deleteAvatar, updateUser, searchUser } = require('./../../controllers/users');
-const { follow, isFollow, unFollow, getFollowers, getFolloweds } = require('./../../controllers/follows');
+const { follow, isFollow, unFollow, getFollowers, getFolloweds, getNotFolloweds } = require('./../../controllers/follows');
 const { publish, publications, FeedPublications, publication } = require('./../../controllers/publication');
 const { addComent, getPublications } = require('./../../controllers/Comment');
 const { addLikes, deleteLikes, isLikes, countLikes } = require('./../../controllers/Like');
@@ -17,7 +17,8 @@ const resolvers = {
         isFollow: (_, { username }, ctx) => isFollow(username, ctx),
         getFollowers: (_, { username }) => getFollowers(username),
         getFolloweds: (_, { username }) => getFolloweds(username), 
-
+        getNotFollowed: (_, { }, ctx) => getNotFolloweds(ctx),
+        
         //Publication
         getPublications: (_, { username }) => publications(username),
         getPublicationsFeed: (_, { }, ctx) => FeedPublications(ctx),

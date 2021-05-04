@@ -95,10 +95,31 @@ const getFolloweds = async (username) => {
     return followedsList;
 }
 
+//Usuarios que no seguimos
+const getNotFolloweds = async ({ user }) => {
+    const users = await User.find().limit(50);
+
+    //Obtendremos los usurios que no seguimos
+    const UserList = [];
+
+    for await (const userItem of users){
+        const isFind = await Follow.findOne({ idUser: user.id })
+            .where("idUserFollow")
+            .equals(userItem._id);
+        if (!isFind) {
+            if (userItem._id.toString() !== user.id.toString()) {
+                UserList.push(userItem);
+            }
+        }
+    }
+    return UserList;
+}
+
 module.exports = {
     follow,
     isFollow,
     unFollow,
     getFollowers,
-    getFolloweds
+    getFolloweds,
+    getNotFolloweds
 }
