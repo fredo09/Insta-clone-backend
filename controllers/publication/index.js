@@ -46,7 +46,7 @@ const publications = async (username) => {
     
     const user = await User.findOne({ username });
     if (!user) throw new Error ('Usuario no existe.');
-    const publications = await Publication.find().where({ idUser: user._id }).sort({ createAt: -1 });
+    const publications = await Publication.find().where({ idUser: user._id }).sort({ createAt: -1 }).populate("idUser");
 
     if (!publications) throw new Error('No contiene Publicaciones');
     return publications;
@@ -94,8 +94,18 @@ const FeedPublications = async ({ user }) => {
     return result;
 }
 
+//Obtenemos la publicacion de un usuario
+const publication = async (idPublication) => {
+    console.log(idPublication)
+    const publication = await Publication.findById({ _id:idPublication }).populate("idUser");
+    console.log(publication);
+    if (!publication) throw new Error('No hay publicacion');
+    return publication;
+}
+
 module.exports = {
     publish,
     publications,
-    FeedPublications
+    FeedPublications,
+    publication
 }

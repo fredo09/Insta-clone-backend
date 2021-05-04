@@ -37,7 +37,7 @@ const typeDefs = gql`
     #Publication para ver publicaciones por usuario
     type Publication {
         id: ID
-        idUser: ID
+        idUser: User
         file: String
         typeFile: String
         createAt: String
@@ -103,6 +103,7 @@ const typeDefs = gql`
         #Publication
         getPublications(username: String!):[Publication]
         getPublicationsFeed: [FeedPublication]
+        getPublication(idPublication: ID!) : Publication
 
         #Comments
         getComments(idPublication: ID!) : [Comment]

@@ -3,7 +3,7 @@
 **/
 const { register, login, getUser, updateAvatar, deleteAvatar, updateUser, searchUser } = require('./../../controllers/users');
 const { follow, isFollow, unFollow, getFollowers, getFolloweds } = require('./../../controllers/follows');
-const { publish, publications, FeedPublications } = require('./../../controllers/publication');
+const { publish, publications, FeedPublications, publication } = require('./../../controllers/publication');
 const { addComent, getPublications } = require('./../../controllers/Comment');
 const { addLikes, deleteLikes, isLikes, countLikes } = require('./../../controllers/Like');
 
@@ -20,7 +20,8 @@ const resolvers = {
 
         //Publication
         getPublications: (_, { username }) => publications(username),
-        getPublicationsFeed: (_, {}, ctx) => FeedPublications(ctx),
+        getPublicationsFeed: (_, { }, ctx) => FeedPublications(ctx),
+        getPublication: (_, { idPublication }) => publication(idPublication),
 
         //Comments
         getComments: (_, { idPublication }) => getPublications(idPublication),
