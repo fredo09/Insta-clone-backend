@@ -57,7 +57,7 @@ const server = () => {
         }
     });
 
-    serverApollo.listen().then(({ url }) => {
+    serverApollo.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
         console.log(`Servidor levantado en ${url}`);
     });
 }
